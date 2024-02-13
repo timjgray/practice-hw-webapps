@@ -21,6 +21,17 @@
 </ol>
 
 <!-- Step 2: Calculate and display the balances -->
+<ul>
+  <% for user in users %>
+    <li>
+      <% inflow = Transaction.where({ "to_user_id" => user["id"] }).sum("amount")%> 
+      <% outflow = Transaction.where({ "from_user_id" => user["id"] }).sum("amount")%> 
+      <p> Balance for <%= user["name"]%>: <%= balance = inflow - outflow %> KC </p>
+    </li>
+  <% end %>
+</ul>
+
+
 
 <!-- 
 Expected balances:
