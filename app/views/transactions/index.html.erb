@@ -9,9 +9,13 @@
   <% for transaction in transactions %>
     <li>
       <% if transaction["from_user_id"] %>
-        <% x = transaction["from_user_id"]%>
-        <p><%= transaction["amount"]%> KC from <%= transaction["from_user_id"] %> to <%= transaction["to_user_id"]%></p>
-      <% end %>
+        <% from_user = User.find_by({"id" => transaction["from_user_id"]}) %>
+        <% to_user = User.find_by({"id" => transaction["to_user_id"]}) %>
+        <p><%= transaction["amount"]%> KC from <%= from_user["name"] %> to <%= to_user["name"]%></p>
+      <% else %>
+        <% to_user = User.find_by({"id" => transaction["to_user_id"]}) %>
+        <p> Initial coin offering: <%= transaction["amount"]%> to <%= to_user["name"]%></p>
+     <% end %>
     </li>
   <% end %>
 </ol>
